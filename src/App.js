@@ -1,11 +1,9 @@
-import React, { lazy, Suspense, useState } from 'react';
-import { render } from 'react-dom';
+import React, { useState } from 'react';
 import SearchParams from './SearchParams';
 import { Router } from '@reach/router';
 import ThemeContext from './ThemeContext';
 import NavBar from './NavBar';
-
-const Details = lazy(() => import('./Details'));
+import Details from './Details';
 
 const App = () => {
   const themeHook = useState('darkBlue')
@@ -14,16 +12,14 @@ const App = () => {
       <ThemeContext.Provider value={themeHook}>
         <div>
           <NavBar />
-          <Suspense fallback={<h1>loading route...</h1>}>
-            <Router>
-              <SearchParams path="/" />
-              <Details path="/details/:id" />
-            </Router>
-          </Suspense>
+          <Router>
+            <SearchParams path="/" />
+            <Details path="/details/:id" />
+          </Router>
         </div>
       </ThemeContext.Provider>
     </React.StrictMode>
   )
 };
 
-render(<App />, document.getElementById("root"));
+export default App;
